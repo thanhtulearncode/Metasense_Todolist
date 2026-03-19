@@ -1,3 +1,28 @@
+#notification-container {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+.notification {
+  background: #323232;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 body {
     font-family: Arial, sans-serif;
     max-width: 600px;
@@ -24,3 +49,66 @@ body {
     border-bottom: 1px solid #ddd;
   }
   
+  .task-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .task-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .task-exit {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .task-exit-active {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .drag-handle {
+    cursor: grab;
+    padding: 0 8px 0 0;
+    color: #aaa;
+    font-size: 18px;
+    user-select: none;
+    transition: color 0.2s;
+    display: inline-block;
+  }
+  .drag-handle:hover {
+    color: #555;
+  }
+
+  li.dragging {
+    opacity: 0.4;
+    background: #f0f0f0;
+    cursor: grabbing;
+  }
+  li.drag-over-top {
+    border-top: 2px solid #3498db;
+    background: #eaf4fd;
+  }
+  li.drag-over-bottom {
+    border-bottom: 2px solid #3498db;
+    background: #eaf4fd;
+  }
+  li {
+    cursor: default;
+  }
+  .loader {
+    display: none;
+    margin: 20px auto;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

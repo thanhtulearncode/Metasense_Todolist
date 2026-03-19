@@ -17,7 +17,7 @@ app.post('/tasks', (req, res) => {
   if (!req.body.name || req.body.name.trim() === '') {
     return res.status(400).json({ error: "Le texte de la tâche est manquant." });
   }
-  const task = { id: Date.now(), completed: false, name: req.body.name.trim() };
+  const task = { id: Date.now(), completed: false, name: req.body.name.trim(), order: tasks.length };
   tasks.push(task);
   res.status(201).json(task);
 });
