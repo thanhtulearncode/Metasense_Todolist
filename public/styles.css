@@ -1,3 +1,43 @@
+:root {
+  --bg: #ffffff;
+  --bg-app: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: gray;
+  --border: #ddd;
+  --input-bg: #ffffff;
+  --input-border: #ccc;
+  --select-bg: #ffffff;
+  --li-dragging-bg: #f0f0f0;
+  --drag-over-bg: #eaf4fd;
+  --loader-track: #f3f3f3;
+  --toggle-bg: #e2e2e2;
+  --toggle-hover-bg: #d0d0d0;
+  --drag-handle-color: #aaa;
+  --drag-handle-hover-color: #555;
+  --notif-bg: #323232;
+  --notif-text: #ffffff;
+}
+
+body.dark {
+  --bg: #1a1a2e;
+  --bg-app: #16213e;
+  --text: #e0e0e0;
+  --text-muted: #888;
+  --border: #3a3a5c;
+  --input-bg: #0f3460;
+  --input-border: #3a3a5c;
+  --select-bg: #0f3460;
+  --li-dragging-bg: #2a2a4a;
+  --drag-over-bg: #1a3a5c;
+  --loader-track: #2a2a4a;
+  --toggle-bg: #2a2a4a;
+  --toggle-hover-bg: #3a3a5c;
+  --drag-handle-color: #666;
+  --drag-handle-hover-color: #aaa;
+  --notif-bg: #050505;
+  --notif-text: #ffffff;
+}
+
 #notification-container {
   position: fixed;
   top: 30px;
@@ -7,15 +47,18 @@
 }
 
 .notification {
-  background: #323232;
-  color: #fff;
+  background-color: var(--notif-bg);
+  color: var(--notif-text) !important;
+  border: 1px solid var(--border);
   padding: 12px 24px;
   border-radius: 6px;
   margin-bottom: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none; 
+  z-index: 10000;
 }
 
 .notification.show {
@@ -24,91 +67,143 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  #taskInput {
-    padding: 8px;
-    width: 70%;
-  }
-  
-  #addTaskBtn {
-    padding: 8px 15px;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .task-enter {
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .task-enter-active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .task-exit {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .task-exit-active {
-    opacity: 0;
-    transform: translateY(20px);
-  }
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
+}
 
-  .drag-handle {
-    cursor: grab;
-    padding: 0 8px 0 0;
-    color: #aaa;
-    font-size: 18px;
-    user-select: none;
-    transition: color 0.2s;
-    display: inline-block;
-  }
-  .drag-handle:hover {
-    color: #555;
-  }
+#app {
+  background-color: var(--bg-app);
+  transition: background-color 0.3s;
+}
 
-  li.dragging {
-    opacity: 0.4;
-    background: #f0f0f0;
-    cursor: grabbing;
-  }
-  li.drag-over-top {
-    border-top: 2px solid #3498db;
-    background: #eaf4fd;
-  }
-  li.drag-over-bottom {
-    border-bottom: 2px solid #3498db;
-    background: #eaf4fd;
-  }
+#appHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+#appHeader h1 {
+  margin: 0;
+}
+
+#darkModeToggle {
+  background: var(--toggle-bg);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+#darkModeToggle:hover {
+  background: var(--toggle-hover-bg);
+  transform: rotate(20deg);
+}
+
+#taskInput {
+  padding: 8px;
+  width: 70%;
+  background-color: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--input-border);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+#addTaskBtn {
+  padding: 8px 15px;
+}
+
+#sortSelect {
+  background-color: var(--select-bg);
+  color: var(--text);
+  border: 1px solid var(--input-border);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 8px;
+  cursor: default;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s, border-color 0.3s;
+}
+
+.task-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.task-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.task-exit {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.task-exit-active {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.drag-handle {
+  cursor: grab;
+  padding: 0 8px 0 0;
+  color: var(--drag-handle-color);
+  font-size: 18px;
+  user-select: none;
+  transition: color 0.2s;
+  display: inline-block;
+}
+.drag-handle:hover {
+  color: var(--drag-handle-hover-color);
+}
+
+li.dragging {
+  opacity: 0.4;
+  background: var(--li-dragging-bg);
+  cursor: grabbing;
+}
+li.drag-over-top {
+  border-top: 2px solid #3498db;
+  background: var(--drag-over-bg);
+}
+li.drag-over-bottom {
+  border-bottom: 2px solid #3498db;
+  background: var(--drag-over-bg);
+}
   li {
     cursor: default;
   }
-  .loader {
-    display: none;
-    margin: 20px auto;
-    border: 6px solid #f3f3f3;
-    border-top: 6px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-  }
+.loader {
+  display: none;
+  margin: 20px auto;
+  border: 6px solid var(--loader-track);
+  border-top-color: #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
